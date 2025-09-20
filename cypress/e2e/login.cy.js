@@ -1,0 +1,38 @@
+describe('Funcionalidade de login', () => {
+
+  it('Deve fazr login com sucesso', () => {
+    cy.visit('http://lojaebac.ebaconline.art.br/minha-conta/')
+
+    cy.get('[name="username"]').type('patrick.jvc@gmail.com')
+    cy.get('#password').type('31070711')
+    //botão login
+    cy.get('input[name="login"]').click()
+    cy.get('.page-title').should('have.text', 'Minha conta')
+
+
+  })
+
+  it('Deve exibir uma mensagem de erro ao inserir EMAIL inválido', () => {
+    cy.visit('http://lojaebac.ebaconline.art.br/minha-conta/')
+    cy.get('[name="username"]').type('patrick@gmail.com')
+    cy.get('#password').type('31070711')
+    //botão login
+    cy.get('input[name="login"]').click()
+
+    cy.contains('Endereço de e-mail desconhecido. Verifique novamente ou tente seu nome de usuário.')
+    .should('be.visible')
+    
+  })
+
+   it('Deve exibir uma mensagem de erro ao inserir SENHA inválida', () => {
+    cy.visit('http://lojaebac.ebaconline.art.br/minha-conta/')
+    cy.get('[name="username"]').type('patrick.jvc@gmail.com')
+    cy.get('#password').type('310707113')
+    //botão login
+    cy.get('input[name="login"]').click()
+
+    cy.contains('Erro: A senha fornecida para o e-mail patrick.jvc@gmail.com está incorreta. Perdeu a senha?')
+    .should('be.visible')
+    
+  })
+})
