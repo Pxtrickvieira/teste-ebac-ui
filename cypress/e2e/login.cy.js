@@ -1,16 +1,24 @@
+const perfil = require('../fixtures/perfil.json')
+
 describe('Funcionalidade de login', () => {
 
   beforeEach(() => {
-    cy.visit('http://lojaebac.ebaconline.art.br/minha-conta/')
+    cy.visit('minha-conta/')
   
   })
 
   it('Deve fazr login com sucesso', () => {
     cy.get('[name="username"]').type('patrick.jvc@gmail.com')
     cy.get('#password').type('31070711')
-    //botão login
     cy.get('input[name="login"]').click()
     cy.get('.page-title').should('have.text', 'Minha conta')
+  })
+  it('Deve fazer login com sucesso - Usando arquivo de dados', () => {
+    cy.get('[name="username"]').type(perfil.usuario)
+    cy.get('#password').type(perfil.senha)
+    cy.get('input[name="login"]').click()
+    cy.get('.page-title').should('have.text', 'Minha conta')
+
   })
 
   it('Deve exibir uma mensagem de erro ao inserir EMAIL inválido', () => {
